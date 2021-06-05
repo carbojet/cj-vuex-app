@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vue'
 export default{
     data(){
         return{
@@ -56,6 +57,7 @@ export default{
         }
     },
     methods:{
+        ...mapActions(['addProductWithMapAction']),
         async addProduct(){
             this.subbmited=true
             let result = await this.$validator.validate()
@@ -72,7 +74,8 @@ export default{
                     brand:this.form.brand,
                     inventoryStatus:this.form.inventoryStatus === 'true'
                 }) */
-                this.$store.dispatch('addProduct',newProduct)
+                this.addProductWithMapAction(newProduct);
+                //this.$store.dispatch('addProduct',newProduct)
                 this.form = {
                     name:'',
                     price:'',
