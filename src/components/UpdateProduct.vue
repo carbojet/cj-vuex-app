@@ -79,22 +79,28 @@ export default{
 
         },
         async handleSubmit(modalEvent){
-            modalEvent.preventDefault()
-            this.subbmited=true
-            let result = await this.$validator.validate()
-            console.log(result)
-            let updatedProduct = {
-                name : this.form.name,
-                price: this.form.price,
-                brand: this.form.brand,
-                inventoryStatus: this.form.inventoryStatus === 'true',
-                id:this.$props.product.id
+            try{
+                modalEvent.preventDefault()
+                this.subbmited=true
+                let result = await this.$validator.validate()
+                let updatedProduct = {
+                    name : this.form.name,
+                    price: this.form.price,
+                    brand: this.form.brand,
+                    inventoryStatus: this.form.inventoryStatus === 'true',
+                    id:this.$props.product.id
+                }
+                if(result){
+                    await this.$store.dispatch('updateProduct',updatedProduct)
+                    this.showToast('Product Updated Successfully!','SUCCESS','success')
+                    this.modalShow = false
+                    this.subbmited = false
+                }
+                
+            }catch(error){
+                this.showToast(error.message,'ERROR','danger')
             }
-            if(result){
-                this.$store.dispatch('updateProduct',updatedProduct)
-                this.modalShow = false
-                this.subbmited = false
-            }
+            
         }
     }
 }

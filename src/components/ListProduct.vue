@@ -39,8 +39,13 @@ export default{
         UpdateProduct
     },
     methods:{
-        deleteProduct(productId){
-            this.$store.dispatch('deleteProduct',productId) 
+        async deleteProduct(productId){
+            try{
+                await this.$store.dispatch('deleteProduct',productId)
+                this.showToast('Product Deleted Successfully!','SUCCESS','success')
+            }catch(error){
+                this.showToast(error.message,'ERROR','danger')
+            }            
         }
     },
     computed:{

@@ -47,7 +47,11 @@
 
 <script>
 //import {mapActions} from 'vue'
+
+//local call mixin limited to this
+//import cjMixins from '@/mixins/cjMixins'
 export default{
+    //mixins:[cjMixins],
     data(){
         return{
             form:{
@@ -82,14 +86,14 @@ export default{
                     //this.addProductWithMapAction('newProduct',newProduct);
                     this.showAddProductSpinnerStatus = true;
                     await this.$store.dispatch('addProduct',newProduct)
-
-                    this.$bvToast.toast(`Product Added Successfully!`, {
+                    this.showToast('Product Added Successfully!','SUCCESS','success')
+                    /* this.$bvToast.toast(`Product Added Successfully!`, {
                         title: 'SUCCESS',
                         variant:'success',
                         solid:true,
                         autoHideDelay: 5000,
                         toaster:'b-toaster-top-right',
-                    })
+                    }) */
                     this.form = {
                         name:'',
                         price:'',
@@ -100,12 +104,16 @@ export default{
                     this.subbmited = false
                 }
             }catch(error){
-                console.log(error)
                 this.showAddProductSpinnerStatus = false;
+                this.showToast(error.message,'ERROR','danger')
+                /* this.$bvToast.toast(error.message, {
+                    title: 'ERROR',
+                    variant:'danger',
+                    solid:true,
+                    autoHideDelay: 5000,
+                    toaster:'b-toaster-top-right',
+                }) */
             }
-            
-            //console.log(result)
-            //console.log(this.form)
         }
     }
 }

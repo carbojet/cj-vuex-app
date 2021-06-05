@@ -20,6 +20,20 @@
       "brand": "Peter England",
       "inventoryStatus": true,
       "id": 5
+    },
+    {
+      "name": "fgdgfgffd",
+      "price": "344",
+      "brand": "hgfds",
+      "inventoryStatus": true,
+      "id": 6
+    },
+    {
+      "name": "zxcbxvzcer",
+      "price": "14324",
+      "brand": "sdbgvc",
+      "inventoryStatus": true,
+      "id": 7
     }
   ]
 }
