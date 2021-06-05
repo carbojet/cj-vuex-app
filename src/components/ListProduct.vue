@@ -20,7 +20,8 @@
                     </b-row>
                 </b-card>
             </b-card-group>
-            <h2 v-if="productList.length < 1">No Product Found...</h2>
+            <h2 v-if="productList.length < 1 && !showPageLoaderStatus">No Product Found...</h2>
+            <b-spinner small variant="secondary" v-if="showPageLoaderStatus" class="page-loader"></b-spinner>
         </b-card>
     </b-col>
 </template>
@@ -31,6 +32,7 @@ import {mapState,mapGetters} from 'vuex'
 export default{
     data(){
         return{
+            showPageLoaderStatus:false
         }
     },
     components:{
@@ -64,8 +66,15 @@ export default{
             
         }
     },
-    mounted(){
-        this.$store.dispatch('setProducts')
+    async mounted(){
+        try{
+            this.showPageLoaderStatus = true
+            await this.$store.dispatch('setProducts')
+            this.showPageLoaderStatus = false
+        }catch(error){
+            this.showPageLoaderStatus = false
+            console.log(error)
+        }
     }
 }
 </script>

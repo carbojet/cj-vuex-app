@@ -37,13 +37,16 @@
                     </b-form-group>
                 </b-form>
             </b-card-body>
-            <b-button block variant="primary" @click="addProduct">Add Product</b-button>
+            <b-button block variant="primary" @click="addProduct">
+                Add Product
+                <b-spinner small variant="light" v-if="showAddProductSpinnerStatus"></b-spinner>
+            </b-button>
         </b-card>
     </b-col>
 </template>
 
 <script>
-import {mapActions} from 'vue'
+//import {mapActions} from 'vue'
 export default{
     data(){
         return{
@@ -53,37 +56,54 @@ export default{
                 brand:'',
                 inventoryStatus:''
             },
-            subbmited:false
+            subbmited:false,
+            showAddProductSpinnerStatus:''
         }
     },
     methods:{
-        ...mapActions(['addProductWithMapAction']),
+        //...mapActions(['addProductWithMapAction']),
         async addProduct(){
-            this.subbmited=true
-            let result = await this.$validator.validate()
-            if(result){
-                let newProduct = {
-                    "name":this.form.name,
-                    "price":this.form.price,
-                    "brand":this.form.brand,
-                    "inventoryStatus":this.form.inventoryStatus === 'true'
+            try{
+                this.subbmited=true
+                let result = await this.$validator.validate()
+                if(result){
+                    let newProduct = {
+                        "name":this.form.name,
+                        "price":this.form.price,
+                        "brand":this.form.brand,
+                        "inventoryStatus":this.form.inventoryStatus === 'true'
+                    }
+                    /* this.$emit('addProduct',{
+                        name:this.form.name,
+                        price:this.form.price,
+                        brand:this.form.brand,
+                        inventoryStatus:this.form.inventoryStatus === 'true'
+                    }) */
+                    //this.addProductWithMapAction('newProduct',newProduct);
+                    this.showAddProductSpinnerStatus = true;
+                    await this.$store.dispatch('addProduct',newProduct)
+
+                    this.$bvToast.toast(`Product Added Successfully!`, {
+                        title: 'SUCCESS',
+                        variant:'success',
+                        solid:true,
+                        autoHideDelay: 5000,
+                        toaster:'b-toaster-top-right',
+                    })
+                    this.form = {
+                        name:'',
+                        price:'',
+                        brand:'',
+                        inventoryStatus:''
+                    }
+                    this.showAddProductSpinnerStatus = false
+                    this.subbmited = false
                 }
-                /* this.$emit('addProduct',{
-                    name:this.form.name,
-                    price:this.form.price,
-                    brand:this.form.brand,
-                    inventoryStatus:this.form.inventoryStatus === 'true'
-                }) */
-                this.addProductWithMapAction(newProduct);
-                //this.$store.dispatch('addProduct',newProduct)
-                this.form = {
-                    name:'',
-                    price:'',
-                    brand:'',
-                    inventoryStatus:''
-                }
-                this.subbmited = false
+            }catch(error){
+                console.log(error)
+                this.showAddProductSpinnerStatus = false;
             }
+            
             //console.log(result)
             //console.log(this.form)
         }

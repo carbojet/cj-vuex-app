@@ -6,6 +6,20 @@
       "brand": "addidas",
       "inventoryStatus": true,
       "id": 3
+    },
+    {
+      "name": "new Sport Shoe",
+      "price": "150",
+      "brand": "Nike",
+      "inventoryStatus": true,
+      "id": 4
+    },
+    {
+      "name": "Formal Pants",
+      "price": "560",
+      "brand": "Peter England",
+      "inventoryStatus": true,
+      "id": 5
     }
   ]
 }
