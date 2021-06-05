@@ -1,0 +1,11 @@
+{
+  "products": [
+    {
+      "name": "Formal Tshirt",
+      "price": "75",
+      "brand": "addidas",
+      "inventoryStatus": true,
+      "id": 3
+    }
+  ]
+}
